@@ -17,6 +17,7 @@
       name="roomType"
       [(ngModel)]="room.roomType"
       placeholder="Room Type"
+      [ngModelOptions]="{ updateOn: 'blur' }"
     />
   </div>
   <div class="form-group">
