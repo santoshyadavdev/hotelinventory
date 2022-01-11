@@ -12,7 +12,7 @@ const routes: Routes = [
     canActivateChild: [RoomGuard],
     children: [
       { path: 'add', component: RoomsAddComponent },
-      { path: ':roomid', component: RoomsBookingComponent },
+      // { path: ':roomid', component: RoomsBookingComponent },
     ],
   },
 ];
