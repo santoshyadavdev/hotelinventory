@@ -6,6 +6,7 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { BookingService } from './booking.service';
@@ -25,47 +26,47 @@ export class BookingComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private fb: FormBuilder,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.bookingForm = this.fb.group(
-      {
-        roomId: new FormControl(
-          { value: '2', disabled: true },
-          { validators: [Validators.required] }
-        ),
-        guestEmail: [
-          '',
-          {
-            updateOn: 'blur',
-            validators: [Validators.required, Validators.email],
-          },
-        ],
-        checkinDate: [''],
-        checkoutDate: [''],
-        bookingStatus: [''],
-        bookingAmount: [''],
-        bookingDate: [''],
-        mobileNumber: [
-          '',
-          {
-            updateOn: 'blur',
-          },
-        ],
-        guestName: ['', [Validators.required, Validators.minLength(5)]],
-        address: this.fb.group({
-          addressLine1: ['', { validators: [Validators.required] }],
-          addressLine2: [''],
-          city: ['', { validators: [Validators.required] }],
-          state: ['', { validators: [Validators.required] }],
-          country: [''],
-          zipCode: [''],
-        }),
-        guests: this.fb.array([this.addGuestControl()]),
-        tnc: new FormControl(false, { validators: [Validators.requiredTrue] }),
-      }
-    );
+    const roomId = this.route.snapshot.paramMap.get('roomid');
+    this.bookingForm = this.fb.group({
+      roomId: new FormControl(
+        { value: roomId, disabled: true },
+        { validators: [Validators.required] }
+      ),
+      guestEmail: [
+        '',
+        {
+          updateOn: 'blur',
+          validators: [Validators.required, Validators.email],
+        },
+      ],
+      checkinDate: [''],
+      checkoutDate: [''],
+      bookingStatus: [''],
+      bookingAmount: [''],
+      bookingDate: [''],
+      mobileNumber: [
+        '',
+        {
+          updateOn: 'blur',
+        },
+      ],
+      guestName: ['', [Validators.required, Validators.minLength(5)]],
+      address: this.fb.group({
+        addressLine1: ['', { validators: [Validators.required] }],
+        addressLine2: [''],
+        city: ['', { validators: [Validators.required] }],
+        state: ['', { validators: [Validators.required] }],
+        country: [''],
+        zipCode: [''],
+      }),
+      guests: this.fb.array([this.addGuestControl()]),
+      tnc: new FormControl(false, { validators: [Validators.requiredTrue] }),
+    });
 
     this.getBookingData();
 
@@ -110,7 +111,6 @@ export class BookingComponent implements OnInit {
 
   getBookingData() {
     this.bookingForm.patchValue({
-      roomId: '2',
       guestEmail: 'test@gmail.com',
       checkinDate: new Date('10-Feb-2020'),
       bookingStatus: '',
