@@ -22,6 +22,7 @@ const routes: Routes = [
       import('./booking/booking.module').then((m) => m.BookingModule),
     // canActivate: [LoginGuard],
   },
+  { path: 'comment', loadChildren: () => import('./comment/comment.module').then(m => m.CommentModule) },
   { path: '**', component: NotfoundComponent },
 ];
 

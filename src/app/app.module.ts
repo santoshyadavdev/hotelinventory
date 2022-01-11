@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -27,6 +27,7 @@ import { HeaderModule } from './header/header.module';
 import { RouteConfigToken } from './services/routeConfig.service';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GlobalErroHandler } from './errorhandler.service';
 function initFactory(initService: InitService) {
   return () => initService.init();
 }
@@ -79,6 +80,7 @@ function initFactory(initService: InitService) {
       deps: [InitService],
       multi: true,
     },
+    { provide: ErrorHandler, useClass: GlobalErroHandler },
   ],
   bootstrap: [AppComponent],
 })

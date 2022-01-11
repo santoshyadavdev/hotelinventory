@@ -1,7 +1,7 @@
-<p>booking works!</p>
+<!-- <p>booking works!</p>
 {{ bookingForm.value | json }}
 {{ bookingForm.pristine | json }}
-{{ bookingForm.dirty | json }}
+{{ bookingForm.dirty | json }} -->
 
 <!-- guestEmail: [''],
       checkinDate: [''],
@@ -17,7 +17,8 @@
       guestCountry: [''],
       guestZipCode: [''],
       guestCount: [''], -->
-
+{{bookingForm.invalid | json}}
+{{bookingForm.valid | json}}
 <div>
   <button
     mat-raised-button
@@ -64,7 +65,7 @@
       formControlName="guestName"
       placeholder="Guest Name"
     />
-    <!-- {{bookingForm.get('guestName')?.errors | json}} -->
+    {{bookingForm.get('guestName')?.errors | json}}
     <mat-error *ngIf="bookingForm.get('guestName')?.hasError('minlength')">
       Guest Name should be minimun 5 characters!
     </mat-error>
@@ -115,6 +116,7 @@
     <input matInput [matDatepicker]="checkout" formControlName="checkoutDate" />
     <mat-datepicker-toggle matSuffix [for]="checkout"></mat-datepicker-toggle>
     <mat-datepicker #checkout></mat-datepicker>
+      {{bookingForm.get('checkoutDate')?.errors | json}}
   </mat-form-field>
   <mat-form-field>
     <mat-label>Booking date</mat-label>

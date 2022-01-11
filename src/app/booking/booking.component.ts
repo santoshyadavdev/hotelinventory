@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
 import { ConfigService } from '../services/config.service';
 import { BookingService } from './booking.service';
+import { CustomValidator } from './validators/custom-validator';
 
 @Component({
   selector: 'hinv-booking',
@@ -55,7 +56,15 @@ export class BookingComponent implements OnInit {
           updateOn: 'blur',
         },
       ],
-      guestName: ['', [Validators.required, Validators.minLength(5)]],
+      guestName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          CustomValidator.ValidateName,
+          CustomValidator.ValidateSpecialChar('*'),
+        ],
+      ],
       address: this.fb.group({
         addressLine1: ['', { validators: [Validators.required] }],
         addressLine2: [''],
@@ -66,7 +75,7 @@ export class BookingComponent implements OnInit {
       }),
       guests: this.fb.array([this.addGuestControl()]),
       tnc: new FormControl(false, { validators: [Validators.requiredTrue] }),
-    });
+    }, { updateOn: 'blur',  validators: [CustomValidator.validatedate]  });
 
     this.getBookingData();
 
@@ -74,9 +83,9 @@ export class BookingComponent implements OnInit {
     //   this.bookingService.bookRoom(data).subscribe((data) => {})
     // });
 
-    this.bookingForm.valueChanges.pipe(
-      exhaustMap((data) => this.bookingService.bookRoom(data))
-    ).subscribe((data) => console.log(data));
+    this.bookingForm.valueChanges
+      .pipe(exhaustMap((data) => this.bookingService.bookRoom(data)))
+      .subscribe((data) => console.log(data));
   }
 
   addBooking() {
