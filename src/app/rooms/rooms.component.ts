@@ -127,9 +127,9 @@ export class RoomsComponent
   }
 
   ngAfterViewInit() {
-    this.headerComponent.title = 'Rooms View';
+    // this.headerComponent.title = 'Rooms View';
 
-    this.headerChildrenComponent.last.title = 'Last Title';
+    // this.headerChildrenComponent.last.title = 'Last Title';
     // this.headerChildrenComponent.get()
   }
 

@@ -13,4 +13,11 @@ describe('ShareddataService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should emit the message', () => {
+    service.setMessage('Hello');
+    service.message$.subscribe(message => {
+      expect(message).toBe('Hello');
+    })
+  });
 });
