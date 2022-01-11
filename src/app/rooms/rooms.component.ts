@@ -11,6 +11,7 @@ import {
   OnDestroy,
   SkipSelf,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { ConfigService } from '../services/config.service';
@@ -76,6 +77,8 @@ export class RoomsComponent
       return of([]);
     })
   );
+
+  priceFilter = new FormControl(0)
 
   roomsCount$ = this.roomsService.getRooms$.pipe(map((rooms) => rooms.length));
 
